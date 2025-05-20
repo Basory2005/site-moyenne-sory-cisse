@@ -2,151 +2,51 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calcul de Moyenne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calcul de Moyenne - Sory Cissé</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #121212;
-      color: #fff;
-    }
-    .welcome-screen {
+      background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350');
+      background-size: cover;
+      background-position: center;
       height: 100vh;
+      color: #fff;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #1f1f1f;
+      text-align: center;
     }
     .welcome-box {
-      background: #333;
-      padding: 50px;
+      background-color: white;
+      color: black;
+      padding: 40px;
       border-radius: 20px;
-      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
       cursor: pointer;
-      transition: 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
     }
     .welcome-box:hover {
-      background: #555;
+      transform: scale(1.05);
     }
-    .hidden {
-      display: none;
-    }
-    .container {
+    .description {
+      margin-top: 30px;
+      max-width: 700px;
+      font-size: 20px;
+      background-color: rgba(0, 0, 0, 0.5);
       padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-    h2 {
-      border-bottom: 2px solid #fff;
-      padding-bottom: 5px;
-    }
-    input, select {
-      padding: 8px;
-      margin: 5px;
-      width: 80px;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #00aaff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0088cc;
-    }
-    .result {
-      margin-top: 15px;
-      font-weight: bold;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-
-  <div class="welcome-screen" id="welcome">
-    <div class="welcome-box" onclick="enterSite()">WELCOME</div>
+  <div class="welcome-box" onclick="location.href='main.html'">WELCOME</div>
+  <div class="description">
+    L’éducation scolaire est la lumière de l’avenir, le fondement de la sagesse et de la liberté. Elle façonne l’esprit, éclaire les rêves, et offre aux enfants les ailes de leur propre envol. Aimer l’école, c’est aimer construire le futur ❤️📚👨‍🏫
   </div>
-
-  <div class="container hidden" id="main">
-    <h1>Calcul de Moyenne</h1>
-
-    <h2>Primaire (sans coefficients)</h2>
-    <div id="primaire-notes">
-      <input type="number" placeholder="Note 1" />
-      <input type="number" placeholder="Note 2" />
-      <input type="number" placeholder="Note 3" />
-      <input type="number" placeholder="Note 4" />
-    </div>
-    <button onclick="calculerPrimaire()">Calculer Moyenne Primaire</button>
-    <div class="result" id="resultPrimaire"></div>
-
-    <h2>Secondaire (avec coefficients)</h2>
-    <div id="secondaire-notes">
-      <div>
-        <input type="number" placeholder="Note" />
-        <input type="number" placeholder="Coef" />
-      </div>
-      <div>
-        <input type="number" placeholder="Note" />
-        <input type="number" placeholder="Coef" />
-      </div>
-      <div>
-        <input type="number" placeholder="Note" />
-        <input type="number" placeholder="Coef" />
-      </div>
-      <div>
-        <input type="number" placeholder="Note" />
-        <input type="number" placeholder="Coef" />
-      </div>
-    </div>
-    <button onclick="calculerSecondaire()">Calculer Moyenne Secondaire</button>
-    <div class="result" id="resultSecondaire"></div>
-  </div>
-
-  <script>
-    function enterSite() {
-      document.getElementById("welcome").classList.add("hidden");
-      document.getElementById("main").classList.remove("hidden");
-    }
-
-    function calculerPrimaire() {
-      const inputs = document.querySelectorAll("#primaire-notes input");
-      let sum = 0;
-      let count = 0;
-
-      inputs.forEach(input => {
-        const val = parseFloat(input.value);
-        if (!isNaN(val)) {
-          sum += val;
-          count++;
-        }
-      });
-
-      const result = count > 0 ? (sum / count).toFixed(2) : "Aucune note valide";
-      document.getElementById("resultPrimaire").innerText = "Moyenne : " + result;
-    }
-
-    function calculerSecondaire() {
-      const divs = document.querySelectorAll("#secondaire-notes div");
-      let total = 0;
-      let totalCoef = 0;
-
-      divs.forEach(div => {
-        const note = parseFloat(div.children[0].value);
-        const coef = parseFloat(div.children[1].value);
-        if (!isNaN(note) && !isNaN(coef)) {
-          total += note * coef;
-          totalCoef += coef;
-        }
-      });
-
-      const result = totalCoef > 0 ? (total / totalCoef).toFixed(2) : "Entrées invalides";
-      document.getElementById("resultSecondaire").innerText = "Moyenne : " + result;
-    }
-  </script>
-
 </body>
 </html>
