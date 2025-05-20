@@ -1,119 +1,142 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bienvenue - Site de Moyenne</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site de Moyenne - Sory Cissé</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('https://cdn.pixabay.com/photo/2016/03/23/13/58/school-1273440_960_720.jpg') no-repeat center center fixed;
+      background-image: url('https://cdn.pixabay.com/photo/2017/03/10/22/27/classroom-2139745_1280.jpg');
       background-size: cover;
+      background-position: center;
+      color: #333;
     }
     .welcome-container {
       display: flex;
-      height: 100vh;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      background-color: rgba(0, 0, 0, 0.5);
+      height: 100vh;
+      backdrop-filter: blur(5px);
     }
     .welcome-box {
       background-color: white;
       padding: 40px;
-      border-radius: 10px;
+      border-radius: 20px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
     .welcome-box h1 {
-      margin: 0 0 20px;
+      font-size: 2.5em;
+      margin-bottom: 20px;
     }
-    .welcome-box p {
-      font-style: italic;
-      margin-bottom: 30px;
-    }
-    .enter-btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #007BFF;
+    .welcome-box button {
+      padding: 10px 30px;
+      font-size: 1em;
+      background-color: #4CAF50;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
     }
-    .form-container {
+    .message {
+      margin-top: 50px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 15px;
+      font-style: italic;
+    }
+    .creator {
+      margin-top: 30px;
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .calcul-section {
       display: none;
       padding: 20px;
-      max-width: 800px;
-      margin: auto;
-      background-color: white;
-      margin-top: 50px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      background: #f4f4f4;
     }
-    input[type="number"] {
-      width: 60px;
-      padding: 5px;
-      margin: 5px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="welcome-container" id="welcome">
     <div class="welcome-box">
-      <h1>Bienvenue</h1>
-      <p>L'éducation scolaire est la meilleure des éducations mentales. Elle assure l'avenir de nos enfants comme une déclaration d'amour à la connaissance.</p>
-      <button class="enter-btn" onclick="enterSite()">Entrer</button>
+      <h1>WELCOME</h1>
+      <button onclick="enterSite()">Entrer</button>
+    </div>
+    <div class="message">
+      L'éducation de l'école est le meilleur chemin vers l'éducation mentale et assure l'avenir des enfants. Aimer apprendre, c'est semer la graine de demain.
+    </div>
+    <div class="creator">
+      Créateur : Sory Cissé<br>
+      Tél : 63180585
     </div>
   </div>
 
-  <div class="form-container" id="formulaire">
-    <h2>Calcul de Moyenne (Primaire & Secondaire)</h2>
-    <form onsubmit="calculerMoyenne(); return false;">
-      <div id="notes-container"></div>
-      <button type="button" onclick="ajouterNote()">Ajouter une note</button>
-      <br><br>
-      <button type="submit">Calculer la moyenne</button>
-    </form>
-    <h3 id="resultat"></h3>
+  <div class="calcul-section" id="calcul">
+    <h2>Calcul de moyenne</h2>
+    <p>Remplissez les notes et les coefficients (jusqu'à 20 lignes).</p>
+    <table id="notesTable">
+      <tr>
+        <th>Note</th>
+        <th>Coefficient</th>
+      </tr>
+    </table>
+    <button onclick="ajouterLigne()">Ajouter une ligne</button>
+    <button onclick="calculerMoyenne()">Calculer</button>
+    <div class="result" id="resultat"></div>
   </div>
 
   <script>
-    let indexNote = 0;
-
     function enterSite() {
-      document.getElementById('welcome').style.display = 'none';
-      document.getElementById('formulaire').style.display = 'block';
-      ajouterNote(); // ajoute une ligne par défaut
+      document.getElementById("welcome").style.display = "none";
+      document.getElementById("calcul").style.display = "block";
+      for (let i = 0; i < 10; i++) ajouterLigne();
     }
 
-    function ajouterNote() {
-      if (indexNote >= 20) return;
-      const container = document.getElementById('notes-container');
-      const div = document.createElement('div');
-      div.innerHTML = `
-        Note ${indexNote + 1}: 
-        <input type="number" min="0" max="20" id="note${indexNote}" placeholder="Note" required>
-        Coef: <input type="number" min="1" max="10" id="coef${indexNote}" placeholder="Coef" required>
-      `;
-      container.appendChild(div);
-      indexNote++;
+    function ajouterLigne() {
+      const table = document.getElementById("notesTable");
+      if (table.rows.length >= 21) return;
+      const row = table.insertRow();
+      const noteCell = row.insertCell();
+      const coefCell = row.insertCell();
+      noteCell.innerHTML = '<input type="number" min="0" max="20">';
+      coefCell.innerHTML = '<input type="number" min="1" max="10">';
     }
 
     function calculerMoyenne() {
-      let somme = 0;
+      const table = document.getElementById("notesTable");
+      let total = 0;
       let totalCoef = 0;
-      for (let i = 0; i < indexNote; i++) {
-        const note = parseFloat(document.getElementById(`note${i}`).value);
-        const coef = parseInt(document.getElementById(`coef${i}`).value);
+      for (let i = 1; i < table.rows.length; i++) {
+        const note = parseFloat(table.rows[i].cells[0].children[0].value);
+        const coef = parseFloat(table.rows[i].cells[1].children[0].value);
         if (!isNaN(note) && !isNaN(coef)) {
-          somme += note * coef;
+          total += note * coef;
           totalCoef += coef;
         }
       }
-      const moyenne = totalCoef > 0 ? (somme / totalCoef).toFixed(2) : 0;
-      document.getElementById('resultat').textContent = `Moyenne : ${moyenne}`;
+      const moyenne = totalCoef ? (total / totalCoef).toFixed(2) : 0;
+      document.getElementById("resultat").textContent = `Moyenne: ${moyenne}`;
     }
   </script>
 </body>
