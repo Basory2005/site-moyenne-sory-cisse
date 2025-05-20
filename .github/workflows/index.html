@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcul de Moyenne - Sory Cissé</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            margin: auto;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 80%;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+        #resultat {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Calculateur de Moyenne</h1>
+        <p>Entrez vos notes ci-dessous :</p>
+
+        <input type="number" id="note1" placeholder="Note 1"><br>
+        <input type="number" id="note2" placeholder="Note 2"><br>
+        <input type="number" id="note3" placeholder="Note 3"><br>
+
+        <button onclick="calculerMoyenne()">Calculer la moyenne</button>
+
+        <div id="resultat"></div>
+    </div>
+
+    <footer>
+        <p>Développé par Sory Cissé</p>
+        <p>Contact : 63180585</p>
+    </footer>
+
+    <script>
+        function calculerMoyenne() {
+            let n1 = parseFloat(document.getElementById('note1').value) || 0;
+            let n2 = parseFloat(document.getElementById('note2').value) || 0;
+            let n3 = parseFloat(document.getElementById('note3').value) || 0;
+            let moyenne = (n1 + n2 + n3) / 3;
+            document.getElementById('resultat').innerText = "Moyenne : " + moyenne.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
