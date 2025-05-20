@@ -1,72 +1,141 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Calcul de Moyenne - Sory Cissé</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            max-width: 500px;
-            background: white;
-            margin: auto;
-            padding: 30px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-        input {
-            padding: 10px;
-            margin: 5px;
-            width: 80%;
-        }
-        button {
-            padding: 10px 20px;
-            margin-top: 10px;
-        }
-        #resultat {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        footer {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #555;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Calculateur de Moyenne - Sory Cissé</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0e0e0, #f9f9f9);
+    }
+
+    .welcome-screen {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #282c34;
+      color: white;
+    }
+
+    .welcome-box {
+      background: white;
+      color: #282c34;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .main-container {
+      display: none;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label, input {
+      display: block;
+      margin: 10px 0;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #resultatPrimaire, #resultatSecondaire {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Calculateur de Moyenne</h1>
-        <p>Entrez vos notes ci-dessous :</p>
+<div class="welcome-screen" onclick="enterSite()">
+  <div class="welcome-box">
+    <h1>Welcome</h1>
+    <p>Cliquez ici pour entrer</p>
+  </div>
+</div>
 
-        <input type="number" id="note1" placeholder="Note 1"><br>
-        <input type="number" id="note2" placeholder="Note 2"><br>
-        <input type="number" id="note3" placeholder="Note 3"><br>
+<div class="main-container" id="mainContent">
+  <h1>Calculateur de Moyenne - Sory Cissé</h1>
 
-        <button onclick="calculerMoyenne()">Calculer la moyenne</button>
+  <div class="section">
+    <h2>Primaire (Sans Coefficients)</h2>
+    <input type="number" id="p1" placeholder="Note 1">
+    <input type="number" id="p2" placeholder="Note 2">
+    <input type="number" id="p3" placeholder="Note 3">
+    <input type="number" id="p4" placeholder="Note 4">
+    <input type="number" id="p5" placeholder="Note 5">
+    <button onclick="calculerPrimaire()">Calculer Moyenne Primaire</button>
+    <div id="resultatPrimaire"></div>
+  </div>
 
-        <div id="resultat"></div>
-    </div>
+  <div class="section">
+    <h2>Secondaire (Avec Coefficients)</h2>
+    <input type="number" id="s1" placeholder="Note 1">
+    <input type="number" id="c1" placeholder="Coefficient 1">
+    <input type="number" id="s2" placeholder="Note 2">
+    <input type="number" id="c2" placeholder="Coefficient 2">
+    <input type="number" id="s3" placeholder="Note 3">
+    <input type="number" id="c3" placeholder="Coefficient 3">
+    <input type="number" id="s4" placeholder="Note 4">
+    <input type="number" id="c4" placeholder="Coefficient 4">
+    <input type="number" id="s5" placeholder="Note 5">
+    <input type="number" id="c5" placeholder="Coefficient 5">
+    <button onclick="calculerSecondaire()">Calculer Moyenne Secondaire</button>
+    <div id="resultatSecondaire"></div>
+  </div>
+</div>
 
-    <footer>
-        <p>Développé par Sory Cissé</p>
-        <p>Contact : 63180585</p>
-    </footer>
+<script>
+  function enterSite() {
+    document.querySelector('.welcome-screen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+  }
 
-    <script>
-        function calculerMoyenne() {
-            let n1 = parseFloat(document.getElementById('note1').value) || 0;
-            let n2 = parseFloat(document.getElementById('note2').value) || 0;
-            let n3 = parseFloat(document.getElementById('note3').value) || 0;
-            let moyenne = (n1 + n2 + n3) / 3;
-            document.getElementById('resultat').innerText = "Moyenne : " + moyenne.toFixed(2);
-        }
-    </script>
+  function calculerPrimaire() {
+    let notes = ["p1", "p2", "p3", "p4", "p5"].map(id => parseFloat(document.getElementById(id).value) || 0);
+    let moyenne = notes.reduce((a, b) => a + b, 0) / notes.length;
+    document.getElementById('resultatPrimaire').innerText = "Moyenne Primaire : " + moyenne.toFixed(2);
+  }
 
-</body>
-</html>
+  function calculerSecondaire() {
+    let notes = [], coeffs = [], somme = 0, totalCoeff = 0;
+    for (let i = 1; i <= 5; i++) {
+      let note = parseFloat(document.getElementById("s" + i).value) || 0;
+      let coeff = parseFloat(document.getElementById("c" + i).value) || 0;
+      somme += note * coeff;
+      totalCoeff += coeff;
+    }
+    let moyenne = totalCoeff > 0 ? (somme / totalCoeff) : 0;
+    document.getElementById('resultatSecondaire').innerText = "Moyenne Secondaire : " + moyenne.toFixed(2);
+  }
+</script>
