@@ -1,143 +1,149 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Site de Moyenne - Sory Cissé</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcul de Moyenne - Sory Cissé</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-image: url('https://cdn.pixabay.com/photo/2017/03/10/22/27/classroom-2139745_1280.jpg');
-      background-size: cover;
-      background-position: center;
-      color: #333;
+      background-color: #f0f0f0;
     }
-    .welcome-container {
+    .welcome-section {
+      height: 100vh;
+      background: url('https://cdni.iconscout.com/illustration/premium/thumb/school-classroom-5522894-4603970.png') no-repeat center center/cover;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      backdrop-filter: blur(5px);
+      position: relative;
+      text-align: center;
     }
     .welcome-box {
       background-color: white;
       padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    }
-    .welcome-box h1 {
-      font-size: 2.5em;
-      margin-bottom: 20px;
-    }
-    .welcome-box button {
-      padding: 10px 30px;
-      font-size: 1em;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 10px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
       cursor: pointer;
     }
-    .message {
-      margin-top: 50px;
-      text-align: center;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-radius: 15px;
-      font-style: italic;
+    .welcome-box h1 {
+      margin: 0;
+      font-size: 25px;
     }
-    .creator {
-      margin-top: 30px;
-      text-align: center;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 10px;
-      border-radius: 10px;
-    }
-    .calcul-section {
-      display: none;
-      padding: 20px;
-      background: #f4f4f4;
-    }
-    table {
+    .education-text {
+      position: absolute;
+      bottom: 20px;
       width: 100%;
-      border-collapse: collapse;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      font-style: italic;
+      text-shadow: 1px 1px 2px black;
     }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
+    .container {
+      padding: 30px;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      min-height: 100vh;
+    }
+    h2 {
       text-align: center;
     }
-    .result {
-      margin-top: 20px;
-      font-weight: bold;
+    .form-group {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .form-group input {
+      flex: 1;
+      margin-right: 5px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #resultat {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <div class="welcome-container" id="welcome">
+  <div class="welcome-section" onclick="document.querySelector('.welcome-section').style.display='none'">
     <div class="welcome-box">
-      <h1>WELCOME</h1>
-      <button onclick="enterSite()">Entrer</button>
+      <h1>Bienvenue</h1>
+      <p>Cliquez pour entrer</p>
     </div>
-    <div class="message">
-      L'éducation de l'école est le meilleur chemin vers l'éducation mentale et assure l'avenir des enfants. Aimer apprendre, c'est semer la graine de demain.
-    </div>
-    <div class="creator">
-      Créateur : Sory Cissé<br>
-      Tél : 63180585
+    <div class="education-text">
+      L'éducation scolaire est le pilier de l'éducation mentale, elle assure l'avenir des enfants et éclaire le monde.
     </div>
   </div>
 
-  <div class="calcul-section" id="calcul">
-    <h2>Calcul de moyenne</h2>
-    <p>Remplissez les notes et les coefficients (jusqu'à 20 lignes).</p>
-    <table id="notesTable">
-      <tr>
-        <th>Note</th>
-        <th>Coefficient</th>
-      </tr>
-    </table>
-    <button onclick="ajouterLigne()">Ajouter une ligne</button>
-    <button onclick="calculerMoyenne()">Calculer</button>
-    <div class="result" id="resultat"></div>
+  <div class="container">
+    <h2>Calcul de Moyenne</h2>
+    <form id="formulaire">
+      <div id="notes"></div>
+      <button type="button" onclick="ajouterChamp()">Ajouter une note</button>
+      <button type="submit">Calculer la Moyenne</button>
+    </form>
+    <div id="resultat"></div>
   </div>
+
+  <footer>
+    Créateur : Sory Cissé | Tel : 63180585
+  </footer>
 
   <script>
-    function enterSite() {
-      document.getElementById("welcome").style.display = "none";
-      document.getElementById("calcul").style.display = "block";
-      for (let i = 0; i < 10; i++) ajouterLigne();
+    const notesContainer = document.getElementById('notes');
+    let compteur = 0;
+    function ajouterChamp() {
+      if (compteur >= 20) return;
+      compteur++;
+      const group = document.createElement('div');
+      group.className = 'form-group';
+      group.innerHTML = `
+        <input type="number" placeholder="Note" step="0.01" min="0" max="20" required>
+        <input type="number" placeholder="Coefficient" step="0.01" min="1" required>
+      `;
+      notesContainer.appendChild(group);
     }
+    ajouterChamp();
 
-    function ajouterLigne() {
-      const table = document.getElementById("notesTable");
-      if (table.rows.length >= 21) return;
-      const row = table.insertRow();
-      const noteCell = row.insertCell();
-      const coefCell = row.insertCell();
-      noteCell.innerHTML = '<input type="number" min="0" max="20">';
-      coefCell.innerHTML = '<input type="number" min="1" max="10">';
-    }
-
-    function calculerMoyenne() {
-      const table = document.getElementById("notesTable");
-      let total = 0;
-      let totalCoef = 0;
-      for (let i = 1; i < table.rows.length; i++) {
-        const note = parseFloat(table.rows[i].cells[0].children[0].value);
-        const coef = parseFloat(table.rows[i].cells[1].children[0].value);
-        if (!isNaN(note) && !isNaN(coef)) {
-          total += note * coef;
-          totalCoef += coef;
+    document.getElementById('formulaire').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputs = document.querySelectorAll('.form-group');
+      let somme = 0, totalCoeff = 0;
+      inputs.forEach(group => {
+        const [noteInput, coeffInput] = group.querySelectorAll('input');
+        const note = parseFloat(noteInput.value);
+        const coeff = parseFloat(coeffInput.value);
+        if (!isNaN(note) && !isNaN(coeff)) {
+          somme += note * coeff;
+          totalCoeff += coeff;
         }
-      }
-      const moyenne = totalCoef ? (total / totalCoef).toFixed(2) : 0;
-      document.getElementById("resultat").textContent = `Moyenne: ${moyenne}`;
-    }
+      });
+      const moyenne = somme / totalCoeff;
+      document.getElementById('resultat').innerHTML = `
+        <h3>Votre moyenne est : ${moyenne.toFixed(2)}</h3>
+      `;
+    });
   </script>
 </body>
 </html>
